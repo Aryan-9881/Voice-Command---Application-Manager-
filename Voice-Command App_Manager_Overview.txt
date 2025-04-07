@@ -1,0 +1,71 @@
+
+Title: Application Manager with Voice Command - Code Overview and Pseudocode
+
+1. INTRODUCTION
+This PyQt5-based desktop application allows users to manage and open applications/websites using a GUI interface and voice commands.
+Voice recognition is powered by the SpeechRecognition and pyttsx3 libraries.
+
+2. LIBRARIES USED
+- PyQt5: For building the GUI.
+- speech_recognition: For capturing and recognizing voice input.
+- pyttsx3: For text-to-speech functionality.
+- subprocess: For launching external programs (e.g., VS Code).
+- datetime: For determining time-based greetings.
+- webbrowser: For opening websites.
+- sys: For application exit handling.
+
+3. CLASSES AND FUNCTIONS
+
+Class: VoiceRecognitionThread (QThread)
+- Handles background voice recognition.
+- Signals recognized text to the main thread.
+
+    Method: run()
+    - Continuously listens for voice input.
+    - Emits recognized command or error messages.
+
+    Method: stop()
+    - Stops the thread cleanly.
+
+Class: MainWindow (QMainWindow)
+- Builds the main application window with a text console and action buttons.
+
+    Method: __init__()
+    - Sets up the window appearance and layout.
+    - Initializes the text-to-speech engine.
+    - Adds GUI components: label, console, buttons.
+    - Starts the voice recognition thread.
+
+    Method: greet_user()
+    - Greets the user based on the time of day (morning/afternoon/evening).
+
+    Method: speak(text)
+    - Speaks the provided text and appends it to the console.
+
+    Methods: open_vscode(), open_youtube(), open_chatgpt(), open_all()
+    - Launch VS Code or open websites using subprocess or webbrowser.
+    - 'open_all' calls all individual open functions.
+
+    Method: process_command(command)
+    - Interprets and executes commands received from the voice thread.
+
+    Method: closeEvent(event)
+    - Ensures the voice thread stops when the app window is closed.
+
+4. GUI ELEMENTS
+- QLabel: Displays a title greeting.
+- QTextEdit: Acts as a console output (logs spoken commands/responses).
+- QPushButton: Triggers individual functions (open apps/sites).
+
+5. VOICE COMMAND SUPPORT
+Supported voice commands include:
+- "jarvis": Triggers a prompt for user assistance.
+- "open code": Opens VS Code.
+- "open youtube": Opens YouTube in a browser.
+- "open chatgpt": Opens ChatGPT.
+- "open all": Executes all of the above.
+- "exit"/"quit": Closes the application.
+
+6. NOTES
+- The document feature has been removed from the code.
+- Voice recognition requires internet connection (for Google API).
